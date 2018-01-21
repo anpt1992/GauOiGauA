@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="GauOiGauA.Views.DecidePage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Label FontSize="Large"
+               HorizontalOptions="CenterAndExpand"
+               HorizontalTextAlignment="Center"
+               Text="ВЫБИРАЙ"
+               TextColor="Black"
+               VerticalOptions="Start" />
+        <Grid VerticalOptions="CenterAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    BackgroundColor="Red"
+                    Command="{Binding ClickCancel}"
+                    FontSize="Medium"
+                    HorizontalOptions="StartAndExpand" />
+            <Button Grid.Column="1"
+                    BackgroundColor="Orange"
+                    Command="{Binding ClickRepeat}"
+                    FontSize="Medium"
+                    HorizontalOptions="CenterAndExpand" />
+        </Grid>
+    </StackLayout>
+</ContentPage>

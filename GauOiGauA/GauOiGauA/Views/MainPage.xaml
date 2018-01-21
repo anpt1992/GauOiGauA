@@ -1,11 +1,75 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage x:Class="GauOiGauA.Views.MainPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GauOiGauA.Views.MainPage"
-             Title="{Binding Title}">
+             xmlns:local="clr-namespace:GauOiGauA">
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism!" />
-    </StackLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="100" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0"
+               Grid.Column="0"
+               Grid.ColumnSpan="2"
+               FontSize="50"
+               HorizontalOptions="Center"
+               HorizontalTextAlignment="Center"
+               Text="{Binding DateTime, StringFormat='{0:T}'}"
+               VerticalOptions="Center"
+               VerticalTextAlignment="Center" />
+
+        <ScrollView Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2">
+            <ListView ItemSelected="OnListViewItemSelected"
+                      ItemsSource="{Binding AlarmList.Alarms}"
+                      RowHeight="100">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="OnDelete"
+                                          CommandParameter="{Binding .}"
+                                          IsDestructive="True"
+                                          Text="Delete" />
+                            </ViewCell.ContextActions>
+                            <ContentView Padding="5">
+                                <StackLayout Orientation="Horizontal">
+                                    <Switch IsToggled="{Binding Enabled, Mode=TwoWay}" Toggled="Switch_Toggled" />
+                                    <StackLayout>
+                                        <Label FontSize="24"
+                                               Text="{Binding Time, StringFormat=\{0:h\\:mm\}}"
+                                               VerticalOptions="StartAndExpand" />
+                                        <Label FontSize="16"
+                                               Text="{Binding FullName}"
+                                               VerticalOptions="CenterAndExpand" />
+                                        <Label FontSize="12"
+                                               Text="{Binding Week}"
+                                               VerticalOptions="CenterAndExpand" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </ContentView>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollView>
+        <Button Grid.Row="2"
+                Grid.Column="1"
+                Margin="0,5,10,5"
+                BackgroundColor="#2196F3"
+                Clicked="OnAddButtonClicked"
+                FontSize="Large"
+                Text="+"
+                TextColor="White" />
+    </Grid>
 </ContentPage>

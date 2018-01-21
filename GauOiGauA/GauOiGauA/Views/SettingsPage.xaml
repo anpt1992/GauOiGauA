@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="GauOiGauA.Views.SettingsPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <StackLayout>
+        <ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0"
+                       Margin="10,5,5,10"
+                       FontSize="Large" />
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0"
+                           Grid.Column="0"
+                           Margin="10,0,0,10"
+                           VerticalOptions="Center" />
+                    <TimePicker Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="5,0,0,5"
+                                HorizontalOptions="FillAndExpand"
+                                Time="{Binding Time, Mode=TwoWay}" />
+
+                    <Label Grid.Row="1"
+                           Grid.Column="0"
+                           Margin="10,0,0,10"
+                           Text="AlarmName"
+                           VerticalOptions="Center" />
+                    <Entry Grid.Row="1"
+                           Grid.Column="1"
+                           Margin="5,0,0,5"
+                           HorizontalOptions="FillAndExpand"
+                           Keyboard="Text"
+                           Placeholder="NamePlaceholder"
+                           Text="{Binding Name, Mode=TwoWay}" />
+
+                    <Label Grid.Row="2"
+                           Grid.Column="0"
+                           Margin="10,0,0,10"
+                           Text="AlarmInterval"
+                           VerticalOptions="Center" />
+                    <StackLayout Grid.Row="2"
+                                 Grid.Column="1"
+                                 Margin="5,0,0,5"
+                                 HorizontalOptions="FillAndExpand">
+                        <Label BindingContext="{x:Reference Name=slider}"
+                               HorizontalOptions="FillAndExpand"
+                               Text="{Binding Value}" />
+                        <Stepper x:Name="slider"
+                                 HorizontalOptions="FillAndExpand"
+                                 Increment="1"
+                                 Maximum="10"
+                                 Minimum="1"
+                                 Value="{Binding Interval, Mode=TwoWay}" />
+                    </StackLayout>
+                </Grid>
+
+                <StackLayout Grid.Row="2"
+                             Padding="10,0,0,10"
+                             HorizontalOptions="Fill"
+                             Orientation="Vertical">
+                    <Label Text="AlarmDays" />
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Text="Monday" />
+                        <Label Grid.Row="0"
+                               Grid.Column="1"
+                               Text="Tuesday" />
+                        <Label Grid.Row="0"
+                               Grid.Column="2"
+                               Text="Wednesday" />
+                        <Label Grid.Row="0"
+                               Grid.Column="3"
+                               Text="Thursday" />
+                        <Label Grid.Row="0"
+                               Grid.Column="4"
+                               Text="Friday" />
+                        <Label Grid.Row="0"
+                               Grid.Column="5"
+                               Text="Saturday" />
+                        <Label Grid.Row="0"
+                               Grid.Column="6"
+                               Text="Sunday" />
+                        <Switch Grid.Row="1"
+                                Grid.Column="0"
+                                IsToggled="{Binding Mon, Mode=TwoWay}" />
+                        <Switch Grid.Row="1"
+                                Grid.Column="1"
+                                IsToggled="{Binding Tue, Mode=TwoWay}" />
+                        <Switch Grid.Row="1"
+                                Grid.Column="2"
+                                IsToggled="{Binding Wen, Mode=TwoWay}" />
+                        <Switch Grid.Row="1"
+                                Grid.Column="3"
+                                IsToggled="{Binding Thu, Mode=TwoWay}" />
+                        <Switch Grid.Row="1"
+                                Grid.Column="4"
+                                IsToggled="{Binding Fri, Mode=TwoWay}" />
+                        <Switch Grid.Row="1"
+                                Grid.Column="5"
+                                IsToggled="{Binding Sat, Mode=TwoWay}" />
+                        <Switch Grid.Row="1"
+                                Grid.Column="6"
+                                IsToggled="{Binding Sun, Mode=TwoWay}" />
+                    </Grid>
+                </StackLayout>
+                <StackLayout Grid.Row="3" Margin="10,0,0,10">
+                    <Label FontSize="Large" Text="AlarmMode}" />
+                    <Picker Title="CHOOSE"
+                            HorizontalOptions="FillAndExpand"
+                            SelectedIndex="{Binding AlarmMode, Mode=TwoWay}">
+                        <Picker.Items>
+                            <x:String>Легкий</x:String>
+                            <x:String>Нормальный</x:String>
+                            <x:String>Сложный</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    <Label FontAttributes="Bold"
+                           FontSize="Medium"
+                           HorizontalOptions="FillAndExpand"
+                           HorizontalTextAlignment="Center"
+                           Text="{Binding AlarmDefinition}" />
+                </StackLayout>
+            </Grid>
+        </ScrollView>
+        <StackLayout Grid.Row="4"
+                     Margin="10,0,10,10"
+                     Orientation="Horizontal">
+            <Button BackgroundColor="#2196F3"
+                    Clicked="OnCancelClicked"
+                    HorizontalOptions="StartAndExpand"
+                    Text="Cancel}"
+                    TextColor="White"
+                    VerticalOptions="StartAndExpand" />
+            <Button BackgroundColor="#2196F3"
+                    Clicked="OnOKClicked"
+                    Command="{Binding AddAlarmCommand}"
+                    HorizontalOptions="EndAndExpand"
+                    Text="OK}"
+                    TextColor="White"
+                    VerticalOptions="StartAndExpand" />
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

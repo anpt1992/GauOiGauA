@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="GauOiGauA.Views.ShakePage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Label FontSize="Large"
+               HorizontalOptions="CenterAndExpand"
+               HorizontalTextAlignment="Center"
+               Text="РАСТРЯСИ ИЛЛЮМИНАТОВ"
+               TextColor="Black"
+               VerticalOptions="StartAndExpand" />
+        <Label FontSize="Large"
+               HorizontalOptions="CenterAndExpand"
+               HorizontalTextAlignment="Center"
+               Text="{Binding ShakesLeft, StringFormat='{0:F0} встрясок осталось!'}"
+               TextColor="Black"
+               VerticalOptions="StartAndExpand" />
+        <Image HeightRequest="200"
+               HorizontalOptions="CenterAndExpand"
+               Rotation="{Binding Rotation, Mode=TwoWay}"
+               Source="illuminati.png"
+               VerticalOptions="CenterAndExpand"
+               WidthRequest="200" />
+    </StackLayout>
+</ContentPage>

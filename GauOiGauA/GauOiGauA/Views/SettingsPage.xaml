@@ -136,7 +136,7 @@
                     </Grid>
                 </StackLayout>
                 <StackLayout Grid.Row="3" Margin="10,0,0,10">
-                    <Label FontSize="Large" Text="AlarmMode}" />
+                    <Label FontSize="Large" Text="AlarmMode" />
                     <Picker Title="CHOOSE"
                             HorizontalOptions="FillAndExpand"
                             SelectedIndex="{Binding AlarmMode, Mode=TwoWay}">

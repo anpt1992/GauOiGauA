@@ -2,8 +2,9 @@
 <ContentPage x:Class="GauOiGauA.Views.MainPage"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:GauOiGauA">
-
+             xmlns:local="clr-namespace:GauOiGauA"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             x:Name="Root">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -22,16 +23,14 @@
                FontSize="50"
                HorizontalOptions="Center"
                HorizontalTextAlignment="Center"
-               Text="{Binding DateTime, StringFormat='{0:T}'}"
+               Text="{Binding DateTimeNow, StringFormat='{0:T}'}"
                VerticalOptions="Center"
                VerticalTextAlignment="Center" />
-
         <ScrollView Grid.Row="1"
                     Grid.RowSpan="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="2">
-            <ListView ItemSelected="OnListViewItemSelected"
-                      ItemsSource="{Binding AlarmList.Alarms}"
+            <ListView ItemsSource="{Binding Alarms}"
                       RowHeight="100">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -42,22 +41,27 @@
                                           IsDestructive="True"
                                           Text="Delete" />
                             </ViewCell.ContextActions>
-                            <ContentView Padding="5">
+                            <StackLayout HorizontalOptions="Fill"
+                                         Orientation="Horizontal">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BindingContext.SelectedCommand, Source={x:Reference Root}}"
+                                                          CommandParameter="{Binding}" />
+                                </StackLayout.GestureRecognizers>
                                 <StackLayout Orientation="Horizontal">
-                                    <Switch IsToggled="{Binding Enabled, Mode=TwoWay}" Toggled="Switch_Toggled" />
+                                    <Switch IsToggled="{Binding Enabled}" />
                                     <StackLayout>
                                         <Label FontSize="24"
-                                               Text="{Binding Time, StringFormat=\{0:h\\:mm\}}"
+                                               Text="{Binding Time}"
                                                VerticalOptions="StartAndExpand" />
                                         <Label FontSize="16"
                                                Text="{Binding FullName}"
                                                VerticalOptions="CenterAndExpand" />
                                         <Label FontSize="12"
-                                               Text="{Binding Week}"
+                                               Text="{Binding FullName}"
                                                VerticalOptions="CenterAndExpand" />
                                     </StackLayout>
                                 </StackLayout>
-                            </ContentView>
+                            </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -67,7 +71,7 @@
                 Grid.Column="1"
                 Margin="0,5,10,5"
                 BackgroundColor="#2196F3"
-                Clicked="OnAddButtonClicked"
+                Command="{Binding AddCommand}"
                 FontSize="Large"
                 Text="+"
                 TextColor="White" />

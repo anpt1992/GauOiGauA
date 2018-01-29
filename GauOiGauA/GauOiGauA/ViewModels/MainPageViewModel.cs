@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using GauOiGauA.Models;
+using Plugin.Notifications;
 using Xamarin.Forms;
 
 namespace GauOiGauA.ViewModels
@@ -55,6 +56,17 @@ namespace GauOiGauA.ViewModels
         }
         private async void AddAction()
         {
+
+            var notify = new Notification
+            {
+                Id = 2,
+                Title = "XXX",
+                Message = "yyy",
+                When = TimeSpan.FromSeconds(30),
+                Vibrate = true
+            };
+
+            await CrossNotifications.Current.Send(notify);
             await NavigationService.NavigateAsync("SettingsPage");
         }
         public DateTime DateTimeNow

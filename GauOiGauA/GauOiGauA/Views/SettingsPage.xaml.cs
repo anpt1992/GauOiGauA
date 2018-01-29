@@ -16,15 +16,5 @@ namespace GauOiGauA.Views
 		{
 			InitializeComponent ();
 		}
-
-	    private void OnCancelClicked(object sender, EventArgs e)
-	    {
-	        throw new NotImplementedException();
-	    }
-
-	    private void OnOKClicked(object sender, EventArgs e)
-	    {
-	        throw new NotImplementedException();
-	    }
 	}
 }

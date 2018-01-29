@@ -13,12 +13,5 @@ namespace GauOiGauA.Views
 		{
 			InitializeComponent();
 		}
-	   
-	    
-
-	    private void OnDelete(object sender, EventArgs e)
-	    {
-	        throw new NotImplementedException();
-	    }
 	}
 }

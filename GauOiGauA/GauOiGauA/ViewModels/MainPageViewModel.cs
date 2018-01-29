@@ -3,6 +3,7 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using GauOiGauA.Models;
@@ -12,28 +13,27 @@ namespace GauOiGauA.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-        private List<Alarm> _alarms;
+        private ObservableCollection<Alarm> _alarms;
         public DelegateCommand<Alarm> SelectedCommand { get; }
-        public List<Alarm> Alarms
+        public DelegateCommand<Alarm> DeleteCommand { get; }
+        public ObservableCollection<Alarm> Alarms
         {
             get
             {
                 if (_alarms == null)
                 {
-                    _alarms = new List<Alarm>
+                    _alarms = new ObservableCollection<Alarm>
                     {
                         new Alarm
                         {
-                            Time = "Test1",
+                            Time = DateTime.Now.TimeOfDay,
                             FullName = "home_faq.png",
-                            Command = new DelegateCommand(() => NavigationService.NavigateAsync("AlarmPage")),
                             Enabled = false
                         },
                         new Alarm
                         {
-                            Time = "Test2",
+                            Time = DateTime.Now.TimeOfDay,
                             FullName = "home_emergency.png",
-                            Command = new DelegateCommand(() => NavigationService.NavigateAsync("AlarmPage")),
                             Enabled = true
                         }
                     };
@@ -50,6 +50,7 @@ namespace GauOiGauA.ViewModels
             Title = "Main Page";
             AddCommand = new DelegateCommand(AddAction);
             SelectedCommand = new DelegateCommand<Alarm>(Selected);
+            DeleteCommand = new DelegateCommand<Alarm>(Delete);
             DateTimeNow = DateTime.Now;
         }
         private async void AddAction()
@@ -68,6 +69,10 @@ namespace GauOiGauA.ViewModels
                 { "Id", obj }
             };
             NavigationService.NavigateAsync("AlarmPage",parameter);
+        }
+        private void Delete(Alarm obj)
+        {
+           Alarms.RemoveAt(Alarms.IndexOf(obj)); 
         }
     }
 }

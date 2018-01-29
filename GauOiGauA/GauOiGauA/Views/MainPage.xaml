@@ -30,28 +30,25 @@
                     Grid.RowSpan="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="2">
-            <ListView ItemsSource="{Binding Alarms}"
-                      RowHeight="100">
+            <ListView ItemsSource="{Binding Alarms}" RowHeight="100">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.ContextActions>
-                                <MenuItem Clicked="OnDelete"
-                                          CommandParameter="{Binding .}"
+                                <MenuItem Command="{Binding BindingContext.DeleteCommand, Source={x:Reference Root}}"
+                                          CommandParameter="{Binding}"
                                           IsDestructive="True"
                                           Text="Delete" />
                             </ViewCell.ContextActions>
-                            <StackLayout HorizontalOptions="Fill"
-                                         Orientation="Horizontal">
+                            <StackLayout HorizontalOptions="Fill" Orientation="Horizontal">
                                 <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding BindingContext.SelectedCommand, Source={x:Reference Root}}"
-                                                          CommandParameter="{Binding}" />
+                                    <TapGestureRecognizer Command="{Binding BindingContext.SelectedCommand, Source={x:Reference Root}}" CommandParameter="{Binding}" />
                                 </StackLayout.GestureRecognizers>
                                 <StackLayout Orientation="Horizontal">
                                     <Switch IsToggled="{Binding Enabled}" />
                                     <StackLayout>
                                         <Label FontSize="24"
-                                               Text="{Binding Time}"
+                                               Text="{Binding Time, StringFormat=\{0:h\\:mm\}}"
                                                VerticalOptions="StartAndExpand" />
                                         <Label FontSize="16"
                                                Text="{Binding FullName}"

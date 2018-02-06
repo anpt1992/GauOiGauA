@@ -9,6 +9,7 @@ using System.Text;
 using GauOiGauA.Models;
 using Plugin.Notifications;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace GauOiGauA.ViewModels
 {
@@ -19,34 +20,13 @@ namespace GauOiGauA.ViewModels
         public DelegateCommand<Alarm> DeleteCommand { get; }
         public ObservableCollection<Alarm> Alarms
         {
-            get
-            {
-                if (_alarms == null)
-                {
-                    _alarms = new ObservableCollection<Alarm>
-                    {
-                        new Alarm
-                        {
-                            Time = DateTime.Now.TimeOfDay,
-                            FullName = "home_faq.png",
-                            Enabled = false
-                        },
-                        new Alarm
-                        {
-                            Time = DateTime.Now.TimeOfDay,
-                            FullName = "home_emergency.png",
-                            Enabled = true
-                        }
-                    };
-                }
-
-                return _alarms;
-            }
+            get => _alarms;
+            set => SetProperty(ref _alarms, value);
         }
         private DateTime _datetimenow;
         public DelegateCommand AddCommand { get; }
-        public MainPageViewModel(INavigationService navigationService) 
-            : base (navigationService)
+        public MainPageViewModel(INavigationService navigationService)
+            : base(navigationService)
         {
             Title = "Main Page";
             AddCommand = new DelegateCommand(AddAction);
@@ -56,13 +36,13 @@ namespace GauOiGauA.ViewModels
         }
         private async void AddAction()
         {
-
+            await CrossNotifications.Current.CancelAll();
             var notify = new Notification
             {
                 Id = 2,
                 Title = "XXX",
                 Message = "yyy",
-                When = TimeSpan.FromSeconds(30),
+                When = TimeSpan.FromHours(3),
                 Vibrate = true
             };
 
@@ -80,11 +60,38 @@ namespace GauOiGauA.ViewModels
             {
                 { "Id", obj }
             };
-            NavigationService.NavigateAsync("AlarmPage",parameter);
+            NavigationService.NavigateAsync("AlarmPage", parameter);
         }
         private void Delete(Alarm obj)
         {
-           Alarms.RemoveAt(Alarms.IndexOf(obj)); 
+            Alarms.RemoveAt(Alarms.IndexOf(obj));
+        }
+
+        public override async void OnNavigatedTo(NavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            await GetAlarms();
+        }
+
+        private async Task GetAlarms()
+        {
+            var list = await CrossNotifications.Current.GetScheduledNotifications();
+            var notifications = new ObservableCollection<Notification>(list);
+            ObservableCollection<Alarm> alm_lts = new ObservableCollection<Alarm>();
+            foreach (var noti in notifications)
+            {
+                DateTime time =  (DateTime) noti.Date;
+                var alm = new Alarm
+                {
+                    Time = DateTimeNow.TimeOfDay,
+                    FullName = noti.Title,
+                    Enabled = noti.IsScheduled
+                };
+                alm_lts.Add(alm);
+            }
+
+            Alarms = alm_lts;
+
         }
     }
 }
